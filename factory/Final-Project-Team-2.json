@@ -1,0 +1,9 @@
+{
+	"name": "Final-Project-Team-2",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "ccab9f28-c691-4fc1-8634-c5e28c3dfa0d",
+		"tenantId": "a8eec281-aaa3-4dae-ac9b-9a398b9215e7"
+	}
+}
