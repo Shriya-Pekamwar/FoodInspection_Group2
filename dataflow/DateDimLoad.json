@@ -27,6 +27,9 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
 				}
 			],
 			"scriptLines": [
@@ -52,7 +55,7 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> source1",
-				"source1 keyGenerate(output(DATE_SK as long),",
+				"aggregate1 keyGenerate(output(DATE_SK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
 				"surrogateKey1 derive(DI_LOAD_DT = currentUTC(),",
@@ -60,6 +63,8 @@
 				"          Year = year(INSPECTION_DATE),",
 				"          Month = toString(INSPECTION_DATE, 'MMMM'),",
 				"          Quarter = ceil(month(INSPECTION_DATE) / 3)) ~> derivedColumn1",
+				"source1 aggregate(groupBy(INSPECTION_DATE),",
+				"     ANY_ROW = first(INSPECTION_ID)) ~> aggregate1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
