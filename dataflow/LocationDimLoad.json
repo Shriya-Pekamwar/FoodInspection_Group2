@@ -5,10 +5,6 @@
 		"typeProperties": {
 			"sources": [
 				{
-					"dataset": {
-						"referenceName": "FoodInspectionStageSF",
-						"type": "DatasetReference"
-					},
 					"name": "source1"
 				}
 			],
@@ -30,28 +26,8 @@
 				}
 			],
 			"scriptLines": [
-				"source(output(",
-				"          RESTAURANT_NAME as string,",
-				"          INSPECTION_TYPE as string,",
-				"          INSPECTION_DATE as date,",
-				"          TOTAL_VIOLATION_SCORE as decimal(38,0),",
-				"          ADDRESS as string,",
-				"          ZIP_CODE as decimal(38,0),",
-				"          INSPECTION_ID as string,",
-				"          VIOLATION_CATEGORY_ID as decimal(38,0),",
-				"          VIOLATION_CATEGORY as string,",
-				"          LATITUDE as double,",
-				"          LONGITUDE as double,",
-				"          CITY as string,",
-				"          STATE as string,",
-				"          FACILITY_TYPE as string,",
-				"          VIOLATION_SCORE as decimal(38,0),",
-				"          RISK_CATEGORY as string,",
-				"          INSPECTION_RESULT as string",
-				"     ),",
-				"     allowSchemaDrift: true,",
-				"     validateSchema: false,",
-				"     format: 'table') ~> source1",
+				"source(allowSchemaDrift: true,",
+				"     validateSchema: false) ~> source1",
 				"source1 keyGenerate(output(LOCATION_SK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
