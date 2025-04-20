@@ -17,71 +17,47 @@
 		},
 		"schema": [
 			{
-				"name": "Restaurant_Name",
-				"type": "UTF8"
+				"name": "Fact_SK",
+				"type": "INT64"
 			},
 			{
-				"name": "Inspection_Type",
-				"type": "UTF8"
+				"name": "Date_SK",
+				"type": "INT64"
 			},
 			{
-				"name": "Inspection_Date",
-				"type": "DATE"
+				"name": "Inspection_SK",
+				"type": "INT64"
+			},
+			{
+				"name": "Violation_SK",
+				"type": "INT64"
+			},
+			{
+				"name": "Facility_SK",
+				"type": "INT64"
+			},
+			{
+				"name": "Location_SK",
+				"type": "INT64"
+			},
+			{
+				"name": "Risk_SK",
+				"type": "INT64"
 			},
 			{
 				"name": "Total_Violation_Score",
 				"type": "INT64"
 			},
 			{
-				"name": "Address",
-				"type": "UTF8"
-			},
-			{
-				"name": "Zip_Code",
-				"type": "INT64"
-			},
-			{
-				"name": "Inspection_ID",
-				"type": "UTF8"
-			},
-			{
-				"name": "Violation_Category_ID",
-				"type": "INT64"
-			},
-			{
-				"name": "Violation_Category",
-				"type": "UTF8"
-			},
-			{
-				"name": "Latitude",
-				"type": "DOUBLE"
-			},
-			{
-				"name": "Longitude",
-				"type": "DOUBLE"
-			},
-			{
-				"name": "City",
-				"type": "UTF8"
-			},
-			{
-				"name": "State",
-				"type": "UTF8"
-			},
-			{
-				"name": "Facility_Type",
-				"type": "UTF8"
-			},
-			{
-				"name": "Violation_Score",
-				"type": "INT64"
-			},
-			{
-				"name": "Risk_Category",
-				"type": "UTF8"
-			},
-			{
 				"name": "Inspection_Result",
+				"type": "UTF8"
+			},
+			{
+				"name": "DI_LOAD_DT",
+				"type": "INT64"
+			},
+			{
+				"name": "DI_JOB_ID",
 				"type": "UTF8"
 			}
 		]
