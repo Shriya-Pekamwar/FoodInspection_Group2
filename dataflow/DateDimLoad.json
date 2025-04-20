@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "DateDimLoad",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DimDateSF",
+						"referenceName": "Date_SF",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -57,17 +57,14 @@
 				"     stepValue: 1L) ~> surrogateKey1",
 				"surrogateKey1 derive(DI_LOAD_DT = currentUTC(),",
 				"          DI_JOB_ID = uuid(),",
-				"          Year = year(INSPECTION_DATE)\r",
-				",",
-				"          Month = toString(INSPECTION_DATE, 'MMMM')\r",
-				",",
-				"          Quarter = ceil(month(INSPECTION_DATE) / 3)\r",
-				") ~> derivedColumn1",
+				"          Year = year(INSPECTION_DATE),",
+				"          Month = toString(INSPECTION_DATE, 'MMMM'),",
+				"          Quarter = ceil(month(INSPECTION_DATE) / 3)) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
 				"          DATE_SK as decimal(38,0),",
-				"          DATE as date,",
+				"          INSPECTIONDATE as date,",
 				"          MONTH as string,",
 				"          YEAR as decimal(38,0),",
 				"          QUARTER as decimal(38,0),",
@@ -79,17 +76,15 @@
 				"     updateable:false,",
 				"     upsertable:false,",
 				"     format: 'table',",
-				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
 				"     stageInsert: true,",
 				"     mapColumn(",
 				"          DATE_SK,",
-				"          DATE = INSPECTION_DATE,",
-				"          DATE_SK = Month,",
-				"          MONTH = DI_LOAD_DT,",
-				"          DI_JOB_ID,",
+				"          INSPECTIONDATE = INSPECTION_DATE,",
+				"          MONTH = Month,",
 				"          YEAR = Year,",
-				"          QUARTER = Quarter",
+				"          QUARTER = Quarter,",
+				"          DI_LOAD_DT,",
+				"          DI_JOB_ID",
 				"     )) ~> sink1"
 			]
 		}
