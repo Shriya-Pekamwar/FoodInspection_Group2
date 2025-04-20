@@ -27,6 +27,12 @@
 				},
 				{
 					"name": "derivedColumn1"
+				},
+				{
+					"name": "aggregate1"
+				},
+				{
+					"name": "select1"
 				}
 			],
 			"scriptLines": [
@@ -52,11 +58,22 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     format: 'table') ~> source1",
-				"source1 keyGenerate(output(Violation_SK as long),",
+				"select1 keyGenerate(output(Violation_SK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
 				"surrogateKey1 derive(DI_LOAD_DT = currentDate(),",
 				"          DI_JOB_ID = uuid()) ~> derivedColumn1",
+				"source1 aggregate(groupBy(VIOLATION_CATEGORY,",
+				"          VIOLATION_CATEGORY_ID,",
+				"          VIOLATION_SCORE),",
+				"     AnyRow = count(VIOLATION_CATEGORY_ID)) ~> aggregate1",
+				"aggregate1 select(mapColumn(",
+				"          VIOLATION_CATEGORY_ID,",
+				"          VIOLATION_CATEGORY,",
+				"          VIOLATION_SCORE",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
