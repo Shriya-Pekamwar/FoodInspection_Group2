@@ -1,5 +1,5 @@
 {
-	"name": "Inspection_DF",
+	"name": "InspectionDimLoad",
 	"properties": {
 		"type": "MappingDataFlow",
 		"typeProperties": {
