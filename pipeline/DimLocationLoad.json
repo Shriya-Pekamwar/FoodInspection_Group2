@@ -1,5 +1,5 @@
 {
-	"name": "StageLoad",
+	"name": "DimLocationLoad",
 	"properties": {
 		"activities": [
 			{
@@ -226,13 +226,13 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "FoodInspectionStageSF",
+						"referenceName": "SnowflakeTable1",
 						"type": "DatasetReference"
 					}
 				]
 			},
 			{
-				"name": "DimLocationLoad",
+				"name": "Data flow1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
