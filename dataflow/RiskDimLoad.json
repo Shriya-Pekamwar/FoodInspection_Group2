@@ -15,7 +15,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "SnowflakeTable2",
+						"referenceName": "Risk_SF",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
