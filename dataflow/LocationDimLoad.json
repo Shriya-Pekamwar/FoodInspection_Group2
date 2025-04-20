@@ -77,7 +77,18 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     stageInsert: true) ~> sink1"
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          LOCATION_SK,",
+				"          ADDRESS,",
+				"          CITY,",
+				"          STATE,",
+				"          ZIP_CODE,",
+				"          LATITUDE,",
+				"          LONGITUDE,",
+				"          DI_LOAD_DT,",
+				"          DI_JOB_ID",
+				"     )) ~> sink1"
 			]
 		}
 	}
