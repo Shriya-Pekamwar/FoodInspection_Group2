@@ -232,7 +232,7 @@
 				]
 			},
 			{
-				"name": "Data flow1",
+				"name": "LocationDimLoad",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
