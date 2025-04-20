@@ -1,0 +1,16 @@
+{
+	"name": "FoodInspectionStageSF",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Snowflake_Final",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SnowflakeV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": "INSPECTION_SCHEMA",
+			"table": "FOOD_INSPECTIONS_STAGE"
+		}
+	}
+}
