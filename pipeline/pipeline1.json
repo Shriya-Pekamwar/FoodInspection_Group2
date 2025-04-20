@@ -1,0 +1,235 @@
+{
+	"name": "pipeline1",
+	"properties": {
+		"activities": [
+			{
+				"name": "Copy data1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "ParquetSource",
+						"storeSettings": {
+							"type": "AzureBlobStorageReadSettings",
+							"recursive": true,
+							"enablePartitionDiscovery": false
+						},
+						"formatSettings": {
+							"type": "ParquetReadSettings"
+						}
+					},
+					"sink": {
+						"type": "SnowflakeV2Sink",
+						"importSettings": {
+							"type": "SnowflakeImportCopyCommand"
+						}
+					},
+					"enableStaging": true,
+					"stagingSettings": {
+						"linkedServiceName": {
+							"referenceName": "AzureBlobStorageFinal",
+							"type": "LinkedServiceReference"
+						},
+						"path": "gold"
+					},
+					"translator": {
+						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Restaurant_Name",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RESTAURANT_NAME",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Inspection_Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "INSPECTION_TYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Inspection_Date",
+									"type": "DateTime"
+								},
+								"sink": {
+									"name": "INSPECTION_DATE",
+									"type": "DateTime"
+								}
+							},
+							{
+								"source": {
+									"name": "Total_Violation_Score",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "TOTAL_VIOLATION_SCORE",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "Address",
+									"type": "String"
+								},
+								"sink": {
+									"name": "ADDRESS",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Zip_Code",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "ZIP_CODE",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "Inspection_ID",
+									"type": "String"
+								},
+								"sink": {
+									"name": "INSPECTION_ID",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Violation_Category_ID",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "VIOLATION_CATEGORY_ID",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "Violation_Category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "VIOLATION_CATEGORY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Latitude",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LATITUDE",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "Longitude",
+									"type": "Double"
+								},
+								"sink": {
+									"name": "LONGITUDE",
+									"type": "Double"
+								}
+							},
+							{
+								"source": {
+									"name": "City",
+									"type": "String"
+								},
+								"sink": {
+									"name": "CITY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "State",
+									"type": "String"
+								},
+								"sink": {
+									"name": "STATE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Facility_Type",
+									"type": "String"
+								},
+								"sink": {
+									"name": "FACILITY_TYPE",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Violation_Score",
+									"type": "Int64"
+								},
+								"sink": {
+									"name": "VIOLATION_SCORE",
+									"type": "Int64"
+								}
+							},
+							{
+								"source": {
+									"name": "Risk_Category",
+									"type": "String"
+								},
+								"sink": {
+									"name": "RISK_CATEGORY",
+									"type": "String"
+								}
+							},
+							{
+								"source": {
+									"name": "Inspection_Result",
+									"type": "String"
+								},
+								"sink": {
+									"name": "INSPECTION_RESULT",
+									"type": "String"
+								}
+							}
+						]
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "FoodInspectionFinalDS",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "FoodInspectionStageSF",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
