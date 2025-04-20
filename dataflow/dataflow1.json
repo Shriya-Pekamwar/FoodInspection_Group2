@@ -1,0 +1,275 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DimFacilitySF",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DimLocationSF",
+						"type": "DatasetReference"
+					},
+					"name": "source2"
+				},
+				{
+					"dataset": {
+						"referenceName": "Inspection_SF",
+						"type": "DatasetReference"
+					},
+					"name": "source3"
+				},
+				{
+					"dataset": {
+						"referenceName": "Risk_SF",
+						"type": "DatasetReference"
+					},
+					"name": "source4"
+				},
+				{
+					"dataset": {
+						"referenceName": "Violation_SF",
+						"type": "DatasetReference"
+					},
+					"name": "source5"
+				},
+				{
+					"dataset": {
+						"referenceName": "Date_SF",
+						"type": "DatasetReference"
+					},
+					"name": "source6"
+				},
+				{
+					"dataset": {
+						"referenceName": "SnowflakeTable1",
+						"type": "DatasetReference"
+					},
+					"name": "source7"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "Fact",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "join1"
+				},
+				{
+					"name": "join2"
+				},
+				{
+					"name": "join3"
+				},
+				{
+					"name": "join4"
+				},
+				{
+					"name": "join5"
+				},
+				{
+					"name": "join6"
+				},
+				{
+					"name": "surrogateKey1"
+				},
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          FACILITY_SK as decimal(38,0),",
+				"          RESTAURANT_NAME as string,",
+				"          FACILITY_TYPE as string,",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source1",
+				"source(output(",
+				"          LOCATION_SK as decimal(38,0),",
+				"          ADDRESS as string,",
+				"          CITY as string,",
+				"          STATE as string,",
+				"          ZIP_CODE as decimal(38,0),",
+				"          LATITUDE as double,",
+				"          LONGITUDE as double,",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source2",
+				"source(output(",
+				"          INSPECTION_SK as decimal(38,0),",
+				"          INSPECTION_ID as string,",
+				"          INSPECTION_TYPE as string,",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source3",
+				"source(output(",
+				"          RISK_SK as decimal(38,0),",
+				"          RISK_CATEGORY as string,",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source4",
+				"source(output(",
+				"          VIOLATION_SK as decimal(38,0),",
+				"          VIOLATION_CATEGORY_ID as decimal(38,0),",
+				"          VIOLATION_CATEGORY as string,",
+				"          VIOLATION_SCORE as decimal(38,0),",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source5",
+				"source(output(",
+				"          DATE_SK as decimal(38,0),",
+				"          INSPECTIONDATE as date,",
+				"          MONTH as string,",
+				"          YEAR as decimal(38,0),",
+				"          QUARTER as decimal(38,0),",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source6",
+				"source(output(",
+				"          RESTAURANT_NAME as string,",
+				"          INSPECTION_TYPE as string,",
+				"          INSPECTION_DATE as date,",
+				"          TOTAL_VIOLATION_SCORE as decimal(38,0),",
+				"          ADDRESS as string,",
+				"          ZIP_CODE as decimal(38,0),",
+				"          INSPECTION_ID as string,",
+				"          VIOLATION_CATEGORY_ID as decimal(38,0),",
+				"          VIOLATION_CATEGORY as string,",
+				"          LATITUDE as double,",
+				"          LONGITUDE as double,",
+				"          CITY as string,",
+				"          STATE as string,",
+				"          FACILITY_TYPE as string,",
+				"          VIOLATION_SCORE as decimal(38,0),",
+				"          RISK_CATEGORY as string,",
+				"          INSPECTION_RESULT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source7",
+				"source7, source1 join(source7@FACILITY_TYPE == source1@FACILITY_TYPE",
+				"     && source7@RESTAURANT_NAME == source1@RESTAURANT_NAME,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1",
+				"join1, source2 join(source7@ZIP_CODE == source2@ZIP_CODE",
+				"     && source7@CITY == source2@CITY",
+				"     && source7@STATE == source2@STATE",
+				"     && source7@ADDRESS == source2@ADDRESS,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join2",
+				"join2, source3 join(source7@INSPECTION_ID == source3@INSPECTION_ID",
+				"     && source7@INSPECTION_TYPE == source3@INSPECTION_TYPE,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join3",
+				"join3, source4 join(source7@RISK_CATEGORY == source4@RISK_CATEGORY,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join4",
+				"join4, source5 join(source7@VIOLATION_CATEGORY_ID == source5@VIOLATION_CATEGORY_ID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join5",
+				"join5, source6 join(INSPECTION_DATE == INSPECTIONDATE,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join6",
+				"select1 keyGenerate(output(FACT_SK as long),",
+				"     startAt: 1L,",
+				"     stepValue: 1L) ~> surrogateKey1",
+				"surrogateKey1 derive(DI_LOAD_DT = currentUTC(),",
+				"          DI_JOB_ID = uuid()) ~> derivedColumn1",
+				"join6 select(mapColumn(",
+				"          each(match(/* All input columns */ true()),",
+				"               /* Input name */ $$ = $$),",
+				"          FACILITY_SK,",
+				"          VIOLATION_SK,",
+				"          DATE_SK,",
+				"          LOCATION_SK,",
+				"          RISK_SK,",
+				"          INSPECTION_SK,",
+				"          TOTAL_VIOLATION_SCORE,",
+				"          INSPECTION_RESULT",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"derivedColumn1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     input(",
+				"          FACT_SK as decimal(38,0),",
+				"          DATE_SK as decimal(38,0),",
+				"          INSPECTION_SK as decimal(38,0),",
+				"          VIOLATION_SK as decimal(38,0),",
+				"          FACILITY_SK as decimal(38,0),",
+				"          LOCATION_SK as decimal(38,0),",
+				"          RISK_SK as decimal(38,0),",
+				"          TOTAL_VIOLATION_SCORE as decimal(38,0),",
+				"          INSPECTION_RESULT as string,",
+				"          DI_LOAD_DT as date,",
+				"          DI_JOB_ID as string",
+				"     ),",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
+				"     stageInsert: true,",
+				"     mapColumn(",
+				"          FACT_SK,",
+				"          DATE_SK,",
+				"          INSPECTION_SK,",
+				"          VIOLATION_SK,",
+				"          FACILITY_SK,",
+				"          LOCATION_SK,",
+				"          RISK_SK,",
+				"          TOTAL_VIOLATION_SCORE,",
+				"          INSPECTION_RESULT,",
+				"          DI_LOAD_DT,",
+				"          DI_JOB_ID",
+				"     )) ~> sink1"
+			]
+		}
+	}
+}
