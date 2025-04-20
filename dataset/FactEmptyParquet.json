@@ -1,0 +1,89 @@
+{
+	"name": "FactEmptyParquet",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorageFinal",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Parquet",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "fact_food_inspection.parquet",
+				"container": "silver"
+			},
+			"compressionCodec": "snappy"
+		},
+		"schema": [
+			{
+				"name": "Restaurant_Name",
+				"type": "UTF8"
+			},
+			{
+				"name": "Inspection_Type",
+				"type": "UTF8"
+			},
+			{
+				"name": "Inspection_Date",
+				"type": "DATE"
+			},
+			{
+				"name": "Total_Violation_Score",
+				"type": "INT64"
+			},
+			{
+				"name": "Address",
+				"type": "UTF8"
+			},
+			{
+				"name": "Zip_Code",
+				"type": "INT64"
+			},
+			{
+				"name": "Inspection_ID",
+				"type": "UTF8"
+			},
+			{
+				"name": "Violation_Category_ID",
+				"type": "INT64"
+			},
+			{
+				"name": "Violation_Category",
+				"type": "UTF8"
+			},
+			{
+				"name": "Latitude",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "Longitude",
+				"type": "DOUBLE"
+			},
+			{
+				"name": "City",
+				"type": "UTF8"
+			},
+			{
+				"name": "State",
+				"type": "UTF8"
+			},
+			{
+				"name": "Facility_Type",
+				"type": "UTF8"
+			},
+			{
+				"name": "Violation_Score",
+				"type": "INT64"
+			},
+			{
+				"name": "Risk_Category",
+				"type": "UTF8"
+			},
+			{
+				"name": "Inspection_Result",
+				"type": "UTF8"
+			}
+		]
+	}
+}
