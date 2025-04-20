@@ -5,6 +5,10 @@
 		"typeProperties": {
 			"sources": [
 				{
+					"dataset": {
+						"referenceName": "SnowflakeTable1",
+						"type": "DatasetReference"
+					},
 					"name": "source1"
 				}
 			],
@@ -26,12 +30,32 @@
 				}
 			],
 			"scriptLines": [
-				"source(allowSchemaDrift: true,",
-				"     validateSchema: false) ~> source1",
+				"source(output(",
+				"          RESTAURANT_NAME as string,",
+				"          INSPECTION_TYPE as string,",
+				"          INSPECTION_DATE as date,",
+				"          TOTAL_VIOLATION_SCORE as decimal(38,0),",
+				"          ADDRESS as string,",
+				"          ZIP_CODE as decimal(38,0),",
+				"          INSPECTION_ID as string,",
+				"          VIOLATION_CATEGORY_ID as decimal(38,0),",
+				"          VIOLATION_CATEGORY as string,",
+				"          LATITUDE as double,",
+				"          LONGITUDE as double,",
+				"          CITY as string,",
+				"          STATE as string,",
+				"          FACILITY_TYPE as string,",
+				"          VIOLATION_SCORE as decimal(38,0),",
+				"          RISK_CATEGORY as string,",
+				"          INSPECTION_RESULT as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'table') ~> source1",
 				"source1 keyGenerate(output(LOCATION_SK as long),",
 				"     startAt: 1L,",
 				"     stepValue: 1L) ~> surrogateKey1",
-				"surrogateKey1 derive(DI_LOAD_DT = currentDate(),",
+				"surrogateKey1 derive(DI_LOAD_DT = currentUTC(),",
 				"          DI_JOB_ID = uuid()) ~> derivedColumn1",
 				"derivedColumn1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
@@ -53,18 +77,7 @@
 				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true,",
-				"     stageInsert: true,",
-				"     mapColumn(",
-				"          LOCATION_SK,",
-				"          ADDRESS,",
-				"          CITY,",
-				"          STATE,",
-				"          ZIP_CODE,",
-				"          LATITUDE,",
-				"          LONGITUDE,",
-				"          DI_LOAD_DT,",
-				"          DI_JOB_ID",
-				"     )) ~> sink1"
+				"     stageInsert: true) ~> sink1"
 			]
 		}
 	}
