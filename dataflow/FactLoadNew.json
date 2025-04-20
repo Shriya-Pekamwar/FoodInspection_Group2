@@ -57,7 +57,7 @@
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "FactSF",
+						"referenceName": "Fact",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
