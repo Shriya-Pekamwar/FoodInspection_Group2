@@ -336,7 +336,7 @@
 				}
 			},
 			{
-				"name": "Data flow2",
+				"name": "LoadDateDim",
 				"type": "ExecuteDataFlow",
 				"state": "Inactive",
 				"onInactiveMarkAs": "Succeeded",
