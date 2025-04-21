@@ -48,7 +48,7 @@
 				},
 				{
 					"dataset": {
-						"referenceName": "SnowflakeTable1",
+						"referenceName": "StageDataLoadSF",
 						"type": "DatasetReference"
 					},
 					"name": "source7"
@@ -222,8 +222,6 @@
 				"surrogateKey1 derive(DI_LOAD_DT = currentUTC(),",
 				"          DI_JOB_ID = uuid()) ~> derivedColumn1",
 				"join6 select(mapColumn(",
-				"          each(match(/* All input columns */ true()),",
-				"               /* Input name */ $$ = $$),",
 				"          FACILITY_SK,",
 				"          VIOLATION_SK,",
 				"          DATE_SK,",
@@ -231,7 +229,9 @@
 				"          RISK_SK,",
 				"          INSPECTION_SK,",
 				"          TOTAL_VIOLATION_SCORE,",
-				"          INSPECTION_RESULT",
+				"          INSPECTION_RESULT,",
+				"          each(match(/* All input columns */true()),",
+				"               /* Input name */$$ = $$)",
 				"     ),",
 				"     skipDuplicateMapInputs: true,",
 				"     skipDuplicateMapOutputs: true) ~> select1",
